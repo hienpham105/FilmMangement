@@ -1,0 +1,116 @@
+﻿
+@{
+    ViewBag.Title = "Cusindex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    < script src = "~/Scripts/jquery-1.10.2.min.js" ></ script >
+    < script src = "~/Scripts/angular.min.js" ></ script >
+    < script src = "~/AngularJS/CustomerJS.js" ></ script >
+    < link href = "~/AngularJS/CustomerStyle.css" rel = "stylesheet" />
+}
+
+<div ng-app="demoModule" id="body">
+    <div ng-controller="demoCtrl">
+
+        <h3>List of Customer</h3>
+
+        <table ng-cloak>
+            <thead>
+                <tr>
+                    <th style="display: none;">ID</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="items in CustomersData">
+                    <td hidden="hidden">{{items.Id}}</td>
+                    <td>{{items.Firstname}}</td>
+                    <td>{{items.Lastname}}</td>
+                    <td>{{items.Email }}</td>
+                    <td>{{items.IdentityCard}}</td>
+                    <td>{{items.UniqueKey }}</td>
+                    <td>{{items.DateOfBirth}}</td>
+                    <td>{{items.Mobile }}</td>
+                    <td>{{items.ResgisteredDate }}</td>
+                    <td>
+                   <button ng-model="$scope.Customer" 
+                   ng-click="edit(CustomersData[$index])">EDIT</button>
+                   <button ng-click="delete($index)">DELETE</button>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="6">
+                        <hr />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Total :</td>
+                    <td></td>
+                    <td><label ng-bind="total() | 
+                    currency:'&#8377;':2"></label></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+        <br />
+        <div style="border-top: solid 2px #282828; width: 430px; height: 10px"> </div>
+
+        <div ng-show="Customer.Id != '' ">
+            <div>
+                <h2>Update Product</h2>
+            </div>
+            <div hidden="hidden">
+                <label for="id">Id</label>
+                <input type="text" data-ng-model="Product.Id" />
+            </div>
+            <div>
+                <label for="name">Name</label>
+                <input type="text" data-ng-model="Product.Name" />
+            </div>
+
+            <div>
+                <label for="category">Category</label>
+                <input type="text" data-ng-model="Product.Category" />
+            </div>
+
+            <div>
+                <label for="price">Price</label>
+                <input type="text" data-ng-model="Product.Price" />
+            </div>
+            <br />
+            <div>
+                <button data-ng-click="update()">Update</button>
+                <button data-ng-click="cancel()">Cancel</button>
+            </div>
+        </div>
+
+        <div ng-hide="Customer.Id != '' ">
+            <div>
+                <h2>Add New Product</h2>
+            </div>
+            <div>
+                <label for="name">Name</label>
+                <input type="text" data-ng-model="Product.Name" />
+            </div>
+
+            <div>
+                <label for="category">Category</label>
+                <input type="text" data-ng-model="Product.Category" />
+            </div>
+
+            <div>
+                <label for="price">Price</label>
+                <input type="text" data-ng-model="Product.Price" />
+            </div>
+            <br />
+            <div>
+                <button data-ng-click="save()">Save</button>
+                <button data-ng-click="clear()">Clear</button>
+            </div>
+        </div>
+    </div>
+</div>

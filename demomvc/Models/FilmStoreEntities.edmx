@@ -1,0 +1,586 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FilmStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Firstname" Type="nvarchar" MaxLength="50" />
+          <Property Name="Lastname" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="250" />
+          <Property Name="IdentityCard" Type="uniqueidentifier" />
+          <Property Name="UniqueKey" Type="nchar" MaxLength="10" />
+          <Property Name="DateOfBirth" Type="datetime" />
+          <Property Name="Mobile" Type="varchar" MaxLength="15" />
+          <Property Name="ResgisteredDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Error">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Message" Type="nvarchar" MaxLength="200" />
+          <Property Name="StackTrace" Type="nchar" MaxLength="10" />
+          <Property Name="DateCreate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Movie">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="500" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Image" Type="varchar" MaxLength="50" />
+          <Property Name="GenreID" Type="int" />
+          <Property Name="Director" Type="nvarchar" MaxLength="250" />
+          <Property Name="Writer" Type="nvarchar" MaxLength="250" />
+          <Property Name="Producer" Type="nvarchar" MaxLength="250" />
+          <Property Name="Rating" Type="int" />
+          <Property Name="TrailerURL" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Rental">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerID" Type="int" />
+          <Property Name="StockID" Type="int" />
+          <Property Name="RentalDate" Type="datetime" />
+          <Property Name="RetumedDate" Type="datetime" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="RoleUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="RoleID" Type="int" />
+        </EntityType>
+        <EntityType Name="Stock">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MovieID" Type="int" />
+          <Property Name="UniqueKey" Type="nchar" MaxLength="10" />
+          <Property Name="IsAvailable" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="200" />
+          <Property Name="Email" Type="nvarchar" MaxLength="250" />
+          <Property Name="HashedPassword" Type="varchar" MaxLength="200" />
+          <Property Name="Salt" Type="varchar" MaxLength="250" />
+          <Property Name="IsLocked" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateCreate" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_Movie_Genre">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="0..1" />
+          <End Role="Movie" Type="Self.Movie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Movie">
+              <PropertyRef Name="GenreID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rental_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Rental" Type="Self.Rental" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Rental">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rental_Stock">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="0..1" />
+          <End Role="Rental" Type="Self.Rental" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Rental">
+              <PropertyRef Name="StockID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleUser_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="RoleUser" Type="Self.RoleUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RoleUser">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleUser_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="RoleUser" Type="Self.RoleUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RoleUser">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stock_Movie">
+          <End Role="Movie" Type="Self.Movie" Multiplicity="0..1" />
+          <End Role="Stock" Type="Self.Stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Stock">
+              <PropertyRef Name="MovieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FilmStoreModelStoreContainer">
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Error" EntityType="Self.Error" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genre" EntityType="Self.Genre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Movie" EntityType="Self.Movie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rental" EntityType="Self.Rental" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoleUser" EntityType="Self.RoleUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Movie_Genre" Association="Self.FK_Movie_Genre">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="Movie" EntitySet="Movie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rental_Customer" Association="Self.FK_Rental_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Rental" EntitySet="Rental" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rental_Stock" Association="Self.FK_Rental_Stock">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="Rental" EntitySet="Rental" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleUser_Role" Association="Self.FK_RoleUser_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="RoleUser" EntitySet="RoleUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleUser_User" Association="Self.FK_RoleUser_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="RoleUser" EntitySet="RoleUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stock_Movie" Association="Self.FK_Stock_Movie">
+            <End Role="Movie" EntitySet="Movie" />
+            <End Role="Stock" EntitySet="Stock" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FilmStoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IdentityCard" Type="Guid" />
+          <Property Name="UniqueKey" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+          <Property Name="Mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="ResgisteredDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Rentals" Relationship="Self.FK_Rental_Customer" FromRole="Customer" ToRole="Rental" />
+        </EntityType>
+        <EntityType Name="Error">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Message" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="StackTrace" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="DateCreate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Movies" Relationship="Self.FK_Movie_Genre" FromRole="Genre" ToRole="Movie" />
+        </EntityType>
+        <EntityType Name="Movie">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="GenreID" Type="Int32" />
+          <Property Name="Director" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Writer" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Producer" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Rating" Type="Int32" />
+          <Property Name="TrailerURL" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Genre" Relationship="Self.FK_Movie_Genre" FromRole="Movie" ToRole="Genre" />
+          <NavigationProperty Name="Stocks" Relationship="Self.FK_Stock_Movie" FromRole="Movie" ToRole="Stock" />
+        </EntityType>
+        <EntityType Name="Rental">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerID" Type="Int32" />
+          <Property Name="StockID" Type="Int32" />
+          <Property Name="RentalDate" Type="DateTime" Precision="3" />
+          <Property Name="RetumedDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_Rental_Customer" FromRole="Rental" ToRole="Customer" />
+          <NavigationProperty Name="Stock" Relationship="Self.FK_Rental_Stock" FromRole="Rental" ToRole="Stock" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="RoleUsers" Relationship="Self.FK_RoleUser_Role" FromRole="Role" ToRole="RoleUser" />
+        </EntityType>
+        <EntityType Name="RoleUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="RoleID" Type="Int32" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_RoleUser_Role" FromRole="RoleUser" ToRole="Role" />
+          <NavigationProperty Name="User" Relationship="Self.FK_RoleUser_User" FromRole="RoleUser" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Stock">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MovieID" Type="Int32" />
+          <Property Name="UniqueKey" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="IsAvailable" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Movie" Relationship="Self.FK_Stock_Movie" FromRole="Stock" ToRole="Movie" />
+          <NavigationProperty Name="Rentals" Relationship="Self.FK_Rental_Stock" FromRole="Stock" ToRole="Rental" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="HashedPassword" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Salt" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IsLocked" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="RoleUsers" Relationship="Self.FK_RoleUser_User" FromRole="User" ToRole="RoleUser" />
+        </EntityType>
+        <Association Name="FK_Rental_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Rental" Type="Self.Rental" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Rental">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movie_Genre">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="0..1" />
+          <End Role="Movie" Type="Self.Movie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Movie">
+              <PropertyRef Name="GenreID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stock_Movie">
+          <End Role="Movie" Type="Self.Movie" Multiplicity="0..1" />
+          <End Role="Stock" Type="Self.Stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Stock">
+              <PropertyRef Name="MovieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rental_Stock">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="0..1" />
+          <End Role="Rental" Type="Self.Rental" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Rental">
+              <PropertyRef Name="StockID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleUser_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="RoleUser" Type="Self.RoleUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RoleUser">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleUser_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="RoleUser" Type="Self.RoleUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RoleUser">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FilmStoreEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Errors" EntityType="Self.Error" />
+          <EntitySet Name="Genres" EntityType="Self.Genre" />
+          <EntitySet Name="Movies" EntityType="Self.Movie" />
+          <EntitySet Name="Rentals" EntityType="Self.Rental" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="RoleUsers" EntityType="Self.RoleUser" />
+          <EntitySet Name="Stocks" EntityType="Self.Stock" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_Rental_Customer" Association="Self.FK_Rental_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Rental" EntitySet="Rentals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movie_Genre" Association="Self.FK_Movie_Genre">
+            <End Role="Genre" EntitySet="Genres" />
+            <End Role="Movie" EntitySet="Movies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stock_Movie" Association="Self.FK_Stock_Movie">
+            <End Role="Movie" EntitySet="Movies" />
+            <End Role="Stock" EntitySet="Stocks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rental_Stock" Association="Self.FK_Rental_Stock">
+            <End Role="Stock" EntitySet="Stocks" />
+            <End Role="Rental" EntitySet="Rentals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleUser_Role" Association="Self.FK_RoleUser_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="RoleUser" EntitySet="RoleUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleUser_User" Association="Self.FK_RoleUser_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="RoleUser" EntitySet="RoleUsers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FilmStoreModelStoreContainer" CdmEntityContainer="FilmStoreEntities">
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="FilmStoreModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IdentityCard" ColumnName="IdentityCard" />
+                <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="ResgisteredDate" ColumnName="ResgisteredDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Errors">
+            <EntityTypeMapping TypeName="FilmStoreModel.Error">
+              <MappingFragment StoreEntitySet="Error">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="StackTrace" ColumnName="StackTrace" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genres">
+            <EntityTypeMapping TypeName="FilmStoreModel.Genre">
+              <MappingFragment StoreEntitySet="Genre">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Movies">
+            <EntityTypeMapping TypeName="FilmStoreModel.Movie">
+              <MappingFragment StoreEntitySet="Movie">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="GenreID" ColumnName="GenreID" />
+                <ScalarProperty Name="Director" ColumnName="Director" />
+                <ScalarProperty Name="Writer" ColumnName="Writer" />
+                <ScalarProperty Name="Producer" ColumnName="Producer" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="TrailerURL" ColumnName="TrailerURL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rentals">
+            <EntityTypeMapping TypeName="FilmStoreModel.Rental">
+              <MappingFragment StoreEntitySet="Rental">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="StockID" ColumnName="StockID" />
+                <ScalarProperty Name="RentalDate" ColumnName="RentalDate" />
+                <ScalarProperty Name="RetumedDate" ColumnName="RetumedDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="FilmStoreModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoleUsers">
+            <EntityTypeMapping TypeName="FilmStoreModel.RoleUser">
+              <MappingFragment StoreEntitySet="RoleUser">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stocks">
+            <EntityTypeMapping TypeName="FilmStoreModel.Stock">
+              <MappingFragment StoreEntitySet="Stock">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MovieID" ColumnName="MovieID" />
+                <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
+                <ScalarProperty Name="IsAvailable" ColumnName="IsAvailable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="FilmStoreModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="FilmStoreModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="HashedPassword" ColumnName="HashedPassword" />
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+                <ScalarProperty Name="IsLocked" ColumnName="IsLocked" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

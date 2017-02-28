@@ -1,0 +1,110 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Dashboard";
+    <link href="~/adminstratios/font.css" rel="stylesheet" />
+    <link href="~/adminstratios/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="~/adminstratios/bootstrap.min.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="~/adminstratios/styles.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="~/adminstratios/responsive.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="~/adminstratios/jquery.bxslider.css" media="screen" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Adminstrations</title>
+</head>
+<body>
+
+    <div class="row">
+        <div>
+            <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="margin-top: 51px;
+                 background-color: blue;
+                 margin-left: 255px;
+                 width: 1244px;">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a href="#" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+                        </a>
+                        <a class="navbar-brand" href="#"><span>TRANG CHỦ </span>PHIM</a>
+                        <input style="margin-left: 725px; margin-top: 10px;background-color: white;color: black;border-radius: 4px; height: 31px; width: 227px;" type="text" placeholder="Nhập thông tin cần tìm..." />
+                        <img src="~/image/search-128.png" style="height: 31px; width: 38px;margin-left: 3px;margin-top: 1px;background-color: white; border-radius: 4px;" />
+                        <ul class="user-menu"></ul>
+                    </div>
+
+                </div><!-- /.container-fluid -->
+            </div>
+        </div>
+        <div class="list-group" style="margin-top: 76px;">
+            <img style="width: 155px; height: 167px; margin-left: 14px;" src="~/images/hoanghon3.jpg" />
+            <div class="ul-list" style="margin-left: 183px; overflow: hidden; margin-top: -180px;">
+                <ul>
+                    <li><h3>Hiền đẹp trai</h3></li>
+                    <li>Derictor:<b>Jonh Smith</b></li>
+                    <li>Writer:<b>Phạm Văn Hiền</b></li>
+                    <li>Producer:<b>Bill Duu</b></li>
+                    <li>
+                        Trailer:
+                        <a href="https://www.youtube.com/watch?v=wjnU9uJScAM">
+                            <img src="~/image/record-128.png" style="width: 37px; height: 27px; margin-left: 9px;" />
+                        </a>
+                    </li>
+                    <li>Rating: #</li>
+                </ul>
+            </div>
+
+
+        </div>
+        <div class="list-group" style="margin-top: 76px;">
+            <img style="width: 155px; height: 167px; margin-left: 14px;" src="~/images/hoanghon3.jpg" />
+            <div class="ul-list" style="margin-left: 183px; overflow: hidden; margin-top: -180px;">
+                <ul>
+                    <li><h3>Hiền đẹp trai</h3></li>
+                    <li>Derictor:<b>Jonh Smith</b></li>
+                    <li>Writer:<b>Phạm Văn Hiền</b></li>
+                    <li>Producer:<b>Bill Duu</b></li>
+                    <li>
+                        Trailer:
+                        <a href="https://www.youtube.com/watch?v=wjnU9uJScAM">
+                            <img src="~/image/record-128.png" style="width: 37px; height: 27px; margin-left: 9px;" />
+                        </a>
+                    </li>
+                    <li>Rating: #</li>
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/adminstratios/js/bootstrap.min.js"></script>
+    <script src="~/adminstratios/js/chart.min.js"></script>
+    <script src="~/adminstratios/js/chart-data.js"></script>
+    <script src="~/adminstratios/js/easypiechart.js"></script>
+    <script src="~/adminstratios/js/easypiechart-data.js"></script>
+    <script src="~/adminstratios/js/bootstrap-datepicker.js"></script>
+    <script>
+        $('#calendar').datepicker({
+        });
+
+        !function ($) {
+            $(document).on("click", "ul.nav li.parent > a > span.icon", function () {
+                $(this).find('em:first').toggleClass("glyphicon-minus");
+            });
+            $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+        }(window.jQuery);
+
+        $(window).on('resize', function () {
+            if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+        })
+        $(window).on('resize', function () {
+            if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+        })
+    </script>
+
+</body>
+</html>
