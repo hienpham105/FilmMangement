@@ -210,15 +210,15 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\FilmController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MovieController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Interface\ICustomerRepository.cs" />
+    <Compile Include="Interface\IMovieRepository.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs">
       <DependentUpon>FilmStoreEntities.tt</DependentUpon>
@@ -269,6 +269,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CustomerRepository.cs" />
+    <Compile Include="Repositories\MovieRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -297,12 +298,22 @@
     <Content Include="adminstratios\responsive.css" />
     <Content Include="adminstratios\style.css" />
     <Content Include="adminstratios\styles.css" />
+    <Content Include="AngularJS\angular.js" />
     <Content Include="AngularJS\CustomerJS.js" />
     <Content Include="AngularJS\CustomerStyle.css" />
+    <Content Include="AngularJS\jquery-1.10.2.min.js" />
+    <Content Include="AngularJS\lumino.glyphs.js" />
+    <Content Include="AngularJS\MovieJS.js" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Hinhanh\download.jpg" />
+    <Content Include="Hinhanh\hoanghon3.jpg" />
     <Content Include="image\common-logout-signout-exit-glyph-128.png" />
     <Content Include="image\FaceTime-128.png" />
     <Content Include="image\Film_Festival-128.png" />
@@ -324,8 +335,6 @@
       <LastGenOutput>FilmStoreEntities.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\angular.min.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -338,7 +347,17 @@
     <Content Include="Models\FilmStoreEntities.edmx.diagram">
       <DependentUpon>FilmStoreEntities.edmx</DependentUpon>
     </Content>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -350,7 +369,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -361,40 +382,18 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layouthome.cshtml" />
     <Content Include="Views\Film\Adminstrations.cshtml" />
     <Content Include="Views\Film\Cusindex.cshtml" />
+    <Content Include="Views\Film\MovIndex.cshtml" />
+    <Content Include="Views\Film\ListCustomer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />

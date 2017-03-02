@@ -1,0 +1,264 @@
+﻿
+@{
+    ViewBag.Title = "MovIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    <link href="~/adminstratios/font.css" rel="stylesheet" />
+    <link href="~/adminstratios/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="~/adminstratios/bootstrap.min.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="~/adminstratios/styles.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="~/adminstratios/responsive.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="~/adminstratios/jquery.bxslider.css" media="screen" />
+    
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/AngularJS/angular.js"></script>
+    <script src="~/AngularJS/MovieJS.js"></script>
+}
+<style>
+    table {
+        font-family: arial, sans - serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr: nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+<style>
+    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+        display: none !important;
+    }
+
+    body {
+        margin: 20px;
+        font-family: "Arial", "Helventica", sans-serif;
+    }
+
+    label {
+        width: 80px;
+        display: inline-block;
+    }
+
+    button {
+        display: inline-block;
+        outline: none;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        padding: .4em 1.1em .4em;
+        color: #fef4e9;
+        border: solid 1px #006fb9;
+        background: #1276bb;
+    }
+
+        button:hover {
+            text-decoration: none;
+            background: #282828;
+            border: solid 1px #000;
+        }
+
+    table {
+        padding-top: 1em;
+    }
+
+    thead, tfoot {
+        font-weight: 600;
+    }
+
+    th, td {
+        padding: .1em .5em;
+        text-align: left;
+    }
+
+        td li, td ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        td li {
+            display: inline;
+        }
+
+            td li::after {
+                content: ',';
+            }
+
+            td li:last-child::after {
+                content: '';
+            }
+</style>
+<div ng-app="movieModule" id="body">
+    <div ng-controller="movieCtrl">
+        <h3>List Film</h3>
+        <table ng-cloak>
+            <thead>
+                <tr>
+                    <th style="display: none;">ID</th>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th>Director</th>
+                    <th>Producer</th>
+                    <th>Writer</th>
+                    <th>Genre</th>
+                    <th>Rating</th>
+                    <th>TrailerURL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in moviesData">
+                    <td hidden="hidden">{{item.ID}}</td>
+                    <td>{{item.Title}}</td>
+                    <td>{{item.Description}}</td>
+                    <td>{{item.Image}}</td>
+                    <td>{{item.Director}}</td>
+                    <td>{{item.Producer}}</td>
+                    <td>{{item.Writer}}</td>
+                    <td>{{item.Genre}}</td>
+                    <td>{{item.Rating}}</td>
+                    <td><a href="{{item.TrailerURL}}"><img src="~/image/record-128.png" style="width: 37px; height: 27px; margin-left: 9px;" /></a></td>
+                    <td>
+                        <button ng-model="$scope.Movie" ng-click="edit(moviesData[$index])">EDIT</button>
+                        <button ng-click="delete($index)">DELETE</button>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="6">
+                        <hr />
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+        <br />
+        <div style="border-top: solid 2px #282828; width:430px; height:10px"></div>
+        <div ng-show="Movie.ID !='' ">
+            <div>
+                <h2>Update</h2>
+            </div>
+            <div hidden="hidden">
+                <label for="ID">ID</label>
+                <input type="text" data-ng-model="Movie.ID" />
+            </div>
+            <div>
+                <label for="Title">Title</label>
+                <input type="text" data-ng-model="Movie.Title" />
+            </div>
+            <div>
+                <label for="Description">Description</label>
+                <input type="text" data-ng-model="Movie.Description" />
+            </div>
+            <div>
+                <label for="Image">Image</label>
+                <input type="text" data-ng-model="Movie.Image" />
+            </div>
+            <div>
+                <label for="Director">Director</label>
+                <input type="text" data-ng-model="Movie.Director" />
+            </div>
+            <div>
+                <label for="Producer">Producer</label>
+                <input type="text" data-ng-model="Movie.Producer" />
+            </div>
+            <div>
+                <label for="Writer">Writer</label>
+                <input type="text" data-ng-model="Movie.Writer" />
+            </div>
+            <div>
+                <label for="Genre">Genre</label>
+                <input type="text" data-ng-model="Movie.Genre" />
+            </div>
+            <div>
+                <label for="Rating">Rating</label>
+                <input type="text" data-ng-model="Movie.Rating" />
+            </div>
+            <div>
+                <label for="TrailerURL">TrailerURL</label>
+                <input type="text" data-ng-model="Movie.TrailerURL" />
+            </div>
+            <br />
+            <div>
+                <button data-ng-click="update()">Edit</button>
+                <button data-ng-click="cancel()">Cancel</button>
+            </div>
+        </div>
+        <div ng-hide="Movie.ID">
+            <div>
+                <h3>Add Film</h3>
+            </div>
+            <div>
+                <label for="Title">Title</label>
+                <input type="text" data-ng-model="Movie.Title" />
+            </div>
+            <div>
+                <label for="Description">Description</label>
+                <input type="text" data-ng-model="Movie.Description" />
+            </div>
+            <div>
+                <label for="Image">Image</label>
+                <input type="text" data-ng-model="Movie.Image" />
+            </div>
+            <div>
+                <label for="Director">Director</label>
+                <input type="text" data-ng-model="Movie.Director" />
+            </div>
+            <div>
+                <label for="Producer">Producer</label>
+                <input type="text" data-ng-model="Movie.Producer" />
+            </div>
+            <div>
+                <label for="Writer">Writer</label>
+                <input type="text" data-ng-model="Movie.Writer" />
+            </div>
+            <div>
+                <label for="Genre">Genre</label>
+                <input type="text" data-ng-model="Movie.Genre" />
+            </div>
+            <div>
+                <label for="Rating">Rating</label>
+                <input type="text" data-ng-model="Movie.Rating" />
+            </div>
+            <div>
+                <label for="TrailerURL">TrailerURL</label>
+                <input type="text" data-ng-model="Movie.TrailerURL" />
+            </div>
+            <br />
+            <div>
+                <button data-ng-click="save()">Save</button>
+                <button data-ng-click="clear()">Clear</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/adminstratios/js/bootstrap.min.js"></script>
+<script src="~/adminstratios/js/bootstrap-datepicker.js"></script>
+<script>
+    $('#calendar').datepicker({
+    });
+
+    !function ($) {
+        $(document).on("click", "ul.nav li.parent > a > span.icon", function () {
+            $(this).find('em:first').toggleClass("glyphicon-minus");
+        });
+        $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+    }(window.jQuery);
+
+    $(window).on('resize', function () {
+        if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+    })
+    $(window).on('resize', function () {
+        if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+    })
+</script>
+
+

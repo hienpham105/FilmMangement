@@ -1,15 +1,95 @@
-﻿
+﻿@model IEnumerable<demomvc.Models.Customer>
 @{
     ViewBag.Title = "Cusindex";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    < script src = "~/Scripts/jquery-1.10.2.min.js" ></ script >
-    < script src = "~/Scripts/angular.min.js" ></ script >
-    < script src = "~/AngularJS/CustomerJS.js" ></ script >
-    < link href = "~/AngularJS/CustomerStyle.css" rel = "stylesheet" />
+    //Script create for Customer
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/AngularJS/CustomerJS.js"></script>
+
 }
 
-<div ng-app="demoModule" id="body">
-    <div ng-controller="demoCtrl">
+<style>
+    table {
+        font-family: arial, sans - serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+        display: none !important;
+    }
+
+    body {
+        margin: 20px;
+        font-family: "Arial", "Helventica", sans-serif;
+    }
+
+    label {
+        width: 80px;
+        display: inline-block;
+    }
+
+    button {
+        display: inline-block;
+        outline: none;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        padding: .4em 1.1em .4em;
+        color: #fef4e9;
+        border: solid 1px #006fb9;
+        background: #1276bb;
+    }
+
+        button:hover {
+            text-decoration: none;
+            background: #282828;
+            border: solid 1px #000;
+        }
+
+    table {
+        padding-top: 1em;
+    }
+
+    thead, tfoot {
+        font-weight: 600;
+    }
+
+    th, td {
+        padding: .1em .5em;
+        text-align: left;
+    }
+
+        td li, td ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        td li {
+            display: inline;
+        }
+
+            td li::after {
+                content: ',';
+            }
+
+            td li:last-child::after {
+                content: '';
+            }
+</style>
+<div ng-app="CustomerModule" id="body">
+    <div ng-controller="CustomerCtrl">
 
         <h3>List of Customer</h3>
 
@@ -18,16 +98,18 @@
                 <tr>
                     <th style="display: none;">ID</th>
                     <th>Name</th>
-                    <th>Category</th>
-                    <th>Price</th>
-                    <th>Actions</th>
+                    <th>Email</th>
+                    <th>IdentityCard</th>
+                    <th>UniqueKey</th>
+                    <th>DateOfBirth</th>
+                    <th>Mobile</th>
+                    <th>ResgisteredDate</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="items in CustomersData">
                     <td hidden="hidden">{{items.Id}}</td>
-                    <td>{{items.Firstname}}</td>
-                    <td>{{items.Lastname}}</td>
+                    <td>{{items.Firstname + item.Lastname}}</td>
                     <td>{{items.Email }}</td>
                     <td>{{items.IdentityCard}}</td>
                     <td>{{items.UniqueKey }}</td>
@@ -35,24 +117,19 @@
                     <td>{{items.Mobile }}</td>
                     <td>{{items.ResgisteredDate }}</td>
                     <td>
-                   <button ng-model="$scope.Customer" 
-                   ng-click="edit(CustomersData[$index])">EDIT</button>
-                   <button ng-click="delete($index)">DELETE</button>
+                        <button ng-model="$scope.Customer"
+                                ng-click="edit(CustomersData[$index])">
+                            EDIT
+                        </button>
+                        <button ng-click="delete($index)">DELETE</button>
                     </td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="6">
-                        <hr />
+                    <td colspan="7">
+                        <hr style="width: 309px; margin-left:-11px;" />
                     </td>
-                </tr>
-                <tr>
-                    <td>Total :</td>
-                    <td></td>
-                    <td><label ng-bind="total() | 
-                    currency:'&#8377;':2"></label></td>
-                    <td></td>
                 </tr>
             </tfoot>
         </table>
@@ -61,26 +138,52 @@
 
         <div ng-show="Customer.Id != '' ">
             <div>
-                <h2>Update Product</h2>
+                <h2>Update Customer</h2>
             </div>
             <div hidden="hidden">
                 <label for="id">Id</label>
-                <input type="text" data-ng-model="Product.Id" />
+                <input style="margin-left: 20px;" type="text" data-ng-model="Customer.Id" />
+            </div>
+            <hr style="width: 309px; margin-left:-11px;" />
+            <div>
+                <label for="firstname">Firstame</label>
+                <input style="margin-left: 20px;" type="text" data-ng-model="Customer.Firstname" />
+            </div>
+            <hr style="width: 309px; margin-left:-11px;" />
+            <div>
+                <label for="lastname">Lastname</label>
+                <input type="text" data-ng-model="Customer.Lastname" />
+            </div>
+            <hr style="width: 309px; margin-left:-11px;" />
+            <div>
+                <label for="email">Email</label>
+                <input style="margin-left: 20px;" type="text" data-ng-model="Customer.Email" />
+            </div>
+            <hr style="width: 309px; margin-left:-11px;" />
+            <div>
+                <label for="IdentityCard">IdentityCard</label>
+                <input style="margin-left: 20px;" type="text" data-ng-model="Customer.IdentityCard" />
+            </div>
+            <hr style="width: 309px; margin-left:-11px;" /
+            <div>
+                <label for="UniqueKey">UniqueKey</label>
+                <input style="margin-left: 20px;" type="text" data-ng-model="Customer.UniqueKey" />
+            </div>
+            <hr style="width: 309px; margin-left:-11px;" />
+            <div>
+                <label for="DateOfBirth">DateOfBirth</label>
+                <input style="margin-left: 20px;" type="text" data-ng-model="Customer.DateOfBirth" />
             </div>
             <div>
-                <label for="name">Name</label>
-                <input type="text" data-ng-model="Product.Name" />
+                <label for="Mobile">Mobile</label>
+                <input style="margin-left: 20px;" type="text" data-ng-model="Customer.Mobile" />
             </div>
-
+            <hr style="width: 309px; margin-left:-11px;" />
             <div>
-                <label for="category">Category</label>
-                <input type="text" data-ng-model="Product.Category" />
+                <label for="ResgisteredDate">ResgisteredDate</label>
+                <input style="margin-left: 20px;" type="text" data-ng-model="Customer.ResgisteredDate" />
             </div>
-
-            <div>
-                <label for="price">Price</label>
-                <input type="text" data-ng-model="Product.Price" />
-            </div>
+            <hr style="width: 309px; margin-left:-11px;" />
             <br />
             <div>
                 <button data-ng-click="update()">Update</button>
@@ -90,22 +193,48 @@
 
         <div ng-hide="Customer.Id != '' ">
             <div>
-                <h2>Add New Product</h2>
+                <h2>Add New Customer</h2>
             </div>
             <div>
-                <label for="name">Name</label>
-                <input type="text" data-ng-model="Product.Name" />
+                <label for="firstname">Firstname</label>
+                <input style="margin-left: 20px;" type="text" data-ng-model="Customer.Firstname" />
             </div>
-
+            <hr style="width: 309px; margin-left:-11px;" />
             <div>
-                <label for="category">Category</label>
-                <input type="text" data-ng-model="Product.Category" />
+                <label for="lastname">Lastname</label>
+                <input style="margin-left: 20px;" type="text" data-ng-model="Customer.Lastname" />
             </div>
-
+            <hr style="width: 309px; margin-left:-11px;" />
             <div>
-                <label for="price">Price</label>
-                <input type="text" data-ng-model="Product.Price" />
+                <label for="email">Email</label>
+                <input style="margin-left: 20px;" type="text" data-ng-model="Customer.Email" />
             </div>
+            <hr style="width: 309px; margin-left:-11px;" />
+            <div>
+                <label for="identityCard">IdentityCard</label>
+                <input style="margin-left: 20px;" type="text" data-ng-model="Customer.IdentityCard" />
+            </div>
+            <hr style="width: 309px; margin-left:-11px;" />
+            <div>
+                <label for="uniqueKey">UniqueKey</label>
+                <input style="margin-left: 20px;" type="text" data-ng-model="Customer.UniqueKey" />
+            </div>
+            <hr style="width: 309px; margin-left:-11px;" />
+            <div>
+                <label for="DateOfBirth">DateOfBirth</label>
+                <input style="margin-left: 20px;" type="text" data-ng-model="Customer.DateOfBirth" />
+            </div>
+            <hr style="width: 309px; margin-left:-11px;" />
+            <div>
+                <label for="mobile">Mobile</label>
+                <input style="margin-left: 20px;" type="text" data-ng-model="Customer.Mobile" />
+            </div>
+            <hr style="width: 309px; margin-left:-11px;" />
+            <div>
+                <label for="resgisteredDate">ResgisteredDate</label>
+                <input style="margin-left: 20px;" type="text" data-ng-model="Customer.ResgisteredDate" />
+            </div>
+            <hr style="width: 309px; margin-left:-11px;" />
             <br />
             <div>
                 <button data-ng-click="save()">Save</button>

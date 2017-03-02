@@ -1,8 +1,5 @@
-﻿// Defining angularjs module
-var app = angular.module('demoModule', []);
-
-// Defining angularjs Controller and injecting ProductsService
-app.controller('demoCtrl', function ($scope, $http, CustomersService) {
+﻿var app = angular.module('CustomerModule', []);
+app.controller('CustomerCtrl', function ($scope, $http, CustomersService) {
 
     $scope.CustomersData = null;
     // Fetching records from the factory created at the bottom of the script file
